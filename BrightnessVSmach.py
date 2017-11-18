@@ -11,27 +11,35 @@ import scipy.stats as ss
 from DespoticInterpolator import BuildDespoticInterpolator
 import matplotlib.pylab as plt
 
-T = 15
+T = 15 * np.ones((1000))
 sigma_ssq = 0.5
 mean_density = 3e2
 
-densities = mean_density * ss.lognorm.rvs(sigma_ssq, size=1000)
+
 
 co10values,co21values,co32values = BuildDespoticInterpolator()
 
-co10values(T,densities)
-co10average = np.mean(co10values)
-co21values(T,densities)
-co21average = np.mean(co21values)
-co32values(T,densities)
-co32average = np.mean(co32values)
-
 mach = np.logspace(0,3,31)
+co10mean = np.zeros(len(mach))
+co21mean = np.zeros(len(mach))
+co32mean = np.zeros(len(mach))
 
-a1, = plt.plot(mach, co10values, 'k', label='co10')
-a2, = plt.plot(mach, co21values, 'b', label='co21')
-a3, = plt.plot(mach, co32values, 'r', label='co32')
-plt.legend(a1,a2,a3)
+for idx, m in enumerate(mach):
+    mean_density = 3e2
+    sigma_ssq = 0.5 # This needs to implement the Mach number scaling.
+    densities = np.log10(mean_density * ss.lognorm.rvs(sigma_ssq, size=1000))
+    co10 = co10values(T, densities)
+    co10mean[idx] = np.mean(co10)
+    co21 = co21values(T, densities)
+    co21mean[idx] = np.mean(co21)
+    co32 = co32values(T, densities)
+    co32mean[idx] = np.mean(co32)
+
+
+a1, = plt.semilogx(mach, co10mean, 'k', label='co10')
+a2, = plt.semilogx(mach, co21mean, 'b', label='co21')
+a3, = plt.semilogx(mach, co32mean, 'r', label='co32')
+plt.legend()
 plt.xlabel('Mach Number')
 plt.ylabel('Line Brightness')
 plt.savefig('Line Brightness vs Mach Number.pdf')
