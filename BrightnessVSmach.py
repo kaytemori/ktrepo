@@ -24,7 +24,7 @@ co21mean = np.zeros(len(mach))
 co32mean = np.zeros(len(mach))
 
 for idx, m in enumerate(mach):
-    mean_density = 3e2
+    mean_density = 3e2 * np.ones((1000))
     sigma_ssq = np.log((1 + m**2)/4)
     densities = np.log10(mean_density * ss.lognorm.rvs(sigma_ssq, size=1000))
     co10 = co10values(T,densities)
@@ -33,6 +33,7 @@ for idx, m in enumerate(mach):
     co21mean[idx] = np.mean(co21)
     co32 = co32values(T,densities)
     co32mean[idx] = np.mean(co32)
+
 
 a1, = plt.semilogx(mach, co10mean, 'k', label='co10')
 a2, = plt.semilogx(mach, co21mean, 'b', label='co21')
