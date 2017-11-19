@@ -25,7 +25,7 @@ co32mean = np.zeros(len(mach))
 
 for idx, m in enumerate(mach):
     mean_density = 3e2 * np.ones((1000))
-    sigma_ssq = np.log((1 + m**2)/4)
+    sigma_ssq = np.log((1 + m**2/4))
     densities = np.log10(mean_density * ss.lognorm.rvs(sigma_ssq, size=1000))
     co10 = co10values(T,densities)
     co10mean[idx] = np.mean(co10)
