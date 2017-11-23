@@ -11,7 +11,8 @@ import scipy.stats as ss
 from DespoticInterpolator import BuildDespoticInterpolator
 import matplotlib.pylab as plt
 
-T = 15 * np.ones((1000))
+T = np.random.normal(18,3,1000)
+#T = 15 * np.ones((1000))
 sigma_ssq = 0.5
 mean_density = 3e2
 
@@ -40,5 +41,6 @@ a2, = plt.semilogx(mach, co21mean, 'b', label='co21')
 a3, = plt.semilogx(mach, co32mean, 'r', label='co32')
 plt.legend()
 plt.xlabel('Mach Number')
-plt.ylabel('Line Brightness')
+plt.ylabel('Line Brightness (K km/s)')
+plt.title('Line Brightness as a Function of Mach Number')
 plt.savefig('Line Brightness vs Mach Number.pdf')

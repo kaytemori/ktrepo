@@ -16,7 +16,7 @@ def BuildDespoticInterpolator():
     lines = gmc.lineLum("co")
 
     T = np.linspace(10,20,5)
-    logn = np.linspace(-20,20,10)
+    logn = np.linspace(-10000000,20,10)
     co10=np.zeros((T.size, logn.size))
     co21=np.zeros((T.size, logn.size))
     co32=np.zeros((T.size, logn.size))
